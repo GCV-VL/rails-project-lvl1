@@ -1,14 +1,26 @@
 module HexletCode
     class Tag
-        def self.build(tag, options = {})
+        def self.build(tag, options = {}, &body)
+        options_string = options.keys.map do |key|
+            "#{key}=\"#{options[key]}\""
+        end.join(' ')
+        puts options_string
             if tag == 'br'
                 '<br>'
             elsif tag == 'img'
-                "<img scr=\"#{options[:scr]}\">"
+                "<img #{options_string}>"
             elsif tag == 'input'
-                "<input type=\"#{options[:type]}\" value=\"#{options[:value]}\">"
+                "<input #{options_string}>"
             elsif tag == 'label'
-                "<label>#{options[:email]}</label>"
+                if block_given?
+                    if options[:for]
+                        "<label #{options_string}>#{body.call}</label>"
+                    else
+                        "<label>#{body.call}</label>"
+                    end
+                else
+                    "<label></label>"
+                end
             elsif tag == 'div'
                 "<div></div>"
             end
