@@ -12,4 +12,9 @@ class TestFormFor < Minitest::Test
         assert_equal '<form action="/users" method="post"></form>', HexletCode.form_for(user, url: '/users')
         assert_equal '<form action="/groups" method="post"></form>', HexletCode.form_for(user, url: '/groups')
     end
+
+    def test_form_for_fields
+        user = User.new name: 'rob', job: 'hexlet', gender: 'm'
+        asssert_equal '<form action="#" method="post">', HexletCode.form_for (user)
+    end
 end
