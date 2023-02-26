@@ -23,7 +23,12 @@ module HexletCode
 
         def input(field_name, options = {})
             if options[:as]
-                @fields << HexletCode::Tag.build('textarea', name: field_name, cols: (@obj[field_name] || 'cols="20"'), rows: @obj[field_name]) {@obj[field_name]}
+                default_values = {cols: '20', rows: '40'}
+                options = options.reject {|k,v| k == :as}
+                merged_params = default_values.merge(options)
+
+                build_line = ({name: field_name}).merge(merged_params)
+                @fields << HexletCode::Tag.build('textarea', build_line) {@obj[field_name]}
             else
                 @fields << HexletCode::Tag.build('input', name: field_name, type: 'text', value: @obj[field_name])
             end
@@ -33,8 +38,16 @@ module HexletCode
             @fields.join
         end
 
+        def submit(value = 'Save')
+            @fields << Elements::Submit.new(value)
+        end
 
-    end
+
+        def submit(value = 'Save', **attrs)
+            @elements << Elements::InputElement.new(value, type: 'submit', **attrs)
+        end
+
+   end
 
 end
 

@@ -47,5 +47,14 @@ class TestFormFor < Minitest::Test
 
     end
 
-
+    def test_should_raise_exeption
+        user = User.new name: 'rob', job: 'hexlet', gender: 'm'
+        assert_raises(StandardError) do
+          HexletCode.form_for user, url: '/users' do |f|
+            f.input :name
+            f.input :job, as: :text
+            f.input :age
+          end
+        end
+    end
 end
