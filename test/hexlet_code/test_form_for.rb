@@ -5,12 +5,6 @@ require "test_helper"
 class TestFormFor < Minitest::Test
   User = Struct.new(:name, :job, :job2, :gender, keyword_init: true)
 
-  class User
-    def company
-      'company'
-    end
-  end
-
   def test_form_for
     user = User.new name: "rob"
     assert_equal '<form action="#" method="post"></form>', 
@@ -21,6 +15,8 @@ class TestFormFor < Minitest::Test
       HexletCode.form_for(user, url: "/groups")
     assert_equal '<form action="#" method="get"></form>', 
       HexletCode.form_for(user, method: "get")
+    assert_equal '<form action="#" method="get" class="hexlet-form"></form>', 
+      HexletCode.form_for(user, method: "get", class: 'hexlet-form')
   end
 
   def test_form_for_fields
