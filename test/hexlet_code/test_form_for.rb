@@ -19,7 +19,7 @@ class TestFormFor < Minitest::Test
       f.input :job, as: :text
     end
 
-    assert_equal '<form action="#" method="post"><label for="name">Name</label><input name="name" type="text" value="rob"><label for="job">Job</label><textarea name="job" cols="20" rows="40">hexlet</textarea></form>',
+    assert_equal '<form action="#" method="post"><label for="name">Name</label><input name="name" type="text" value="rob"><label for="job">Job</label><textarea cols="20" rows="40" name="job">hexlet</textarea></form>',
                  form_tag
   end
 
@@ -30,7 +30,7 @@ class TestFormFor < Minitest::Test
       f.input :job, as: :text
     end
 
-    assert_equal '<form action="#" method="post"><label for="name">Name</label><input name="name" type="text" value="rob"><label for="job">Job</label><textarea name="job" cols="20" rows="40">hexlet</textarea></form>',
+    assert_equal '<form action="#" method="post"><label for="name">Name</label><input class="user-input" name="name" type="text" value="rob"><label for="job">Job</label><textarea cols="20" rows="40" name="job">hexlet</textarea></form>',
                  form_tag
   end
 
@@ -39,7 +39,7 @@ class TestFormFor < Minitest::Test
     form_tag = HexletCode.form_for(user) do |f|
       f.input :job, as: :text, rows: 50, cols: 50
     end
-    assert_equal '<form action="#" method="post"><label for="job">Job</label><textarea name="job" cols="50" rows="50">hexlet</textarea></form>',
+    assert_equal '<form action="#" method="post"><label for="job">Job</label><textarea cols="50" rows="50" name="job">hexlet</textarea></form>',
                  form_tag
   end
 
@@ -62,7 +62,7 @@ class TestFormFor < Minitest::Test
       f.submit
     end
 
-    assert_equal '<form action="#" method="post"><label for="name">Name</label><input name="name" type="text" value="rob"><label for="job">Job</label><textarea name="job" cols="20" rows="40">hexlet</textarea><input type="submit" value="Save"></form>',
+    assert_equal '<form action="#" method="post"><label for="name">Name</label><input name="name" type="text" value="rob"><label for="job">Job</label><textarea cols="20" rows="40" name="job">hexlet</textarea><input type="submit" value="Save"></form>',
                  form_tag
   end
 end

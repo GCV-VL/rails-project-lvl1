@@ -20,15 +20,18 @@ module HexletCode
     end
 
     def input(field_name, options = {})
-      default_options = { cols: "20", rows: "40" }
+      merged_options = options
+      merged_options[:name] = field_name
+
       if options.delete(:as)
-        merged_options = default_options.merge(options)
-        build_line = { name: field_name }.merge(merged_options)
+        merged_options = { cols: "20", rows: "40" }.merge(merged_options)
         @tags << HexletCode::Tag.build("label", for: field_name) { field_name.capitalize }
-        @tags << HexletCode::Tag.build("textarea", build_line) { @model[field_name] }
+        @tags << HexletCode::Tag.build("textarea", merged_options) { @model[field_name] }
       else
         @tags << HexletCode::Tag.build("label", for: field_name) { field_name.capitalize }
-        @tags << HexletCode::Tag.build("input", name: field_name, type: "text", value: @model[field_name])
+        merged_options[:type] = "text"
+        merged_options[:value] = @model[field_name]
+        @tags << HexletCode::Tag.build("input", merged_options)
       end
     end
 
