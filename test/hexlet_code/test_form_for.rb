@@ -5,11 +5,22 @@ require "test_helper"
 class TestFormFor < Minitest::Test
   User = Struct.new(:name, :job, :job2, :gender, keyword_init: true)
 
+  class User
+    def company
+      'company'
+    end
+  end
+
   def test_form_for
     user = User.new name: "rob"
-    assert_equal '<form action="#" method="post"></form>', HexletCode.form_for(user)
-    assert_equal '<form action="/users" method="post"></form>', HexletCode.form_for(user, url: "/users")
-    assert_equal '<form action="/groups" method="post"></form>', HexletCode.form_for(user, url: "/groups")
+    assert_equal '<form action="#" method="post"></form>', 
+      HexletCode.form_for(user)
+    assert_equal '<form action="/users" method="post"></form>', 
+      HexletCode.form_for(user, url: "/users")
+    assert_equal '<form action="/groups" method="post"></form>', 
+      HexletCode.form_for(user, url: "/groups")
+    assert_equal '<form action="#" method="get"></form>', 
+      HexletCode.form_for(user, method: "get")
   end
 
   def test_form_for_fields
@@ -59,10 +70,22 @@ class TestFormFor < Minitest::Test
     form_tag = HexletCode.form_for user do |f|
       f.input :name
       f.input :job, as: :text
-      f.submit
+      f.submit 
     end
 
     assert_equal '<form action="#" method="post"><label for="name">Name</label><input name="name" type="text" value="rob"><label for="job">Job</label><textarea cols="20" rows="40" name="job">hexlet</textarea><input type="submit" value="Save"></form>',
                  form_tag
+  end
+
+
+  def test_form_for_fields_submit_wow
+    user = User.new name: "rob", job: "hexlet", gender: "m"
+    form_tag = HexletCode.form_for user do |f|
+      f.input :name
+      f.input :job, as: :text
+      f.submit "WoW"
+    end
+
+    assert_equal '<form action="#" method="post"><label for="name">Name</label><input name="name" type="text" value="rob"><label for="job">Job</label><textarea cols="20" rows="40" name="job">hexlet</textarea><input type="submit" value="WoW"></form>', form_tag
   end
 end

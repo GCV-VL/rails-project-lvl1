@@ -2,6 +2,7 @@
 
 module HexletCode
   def self.form_for(model, options = {})
+    method = options.fetch(:method, 'post')
     url = options.fetch(:url, "#")
 
     form_body = if block_given?
@@ -10,7 +11,7 @@ module HexletCode
                   form_fields.to_html
 
                 end
-    HexletCode::Tag.build("form", action: url, method: "post") { form_body }
+    HexletCode::Tag.build("form", action: url, method: method) { form_body }
   end
 
   class FormFields
@@ -26,17 +27,17 @@ module HexletCode
       if options.delete(:as)
         merged_options = { cols: "20", rows: "40" }.merge(merged_options)
         @tags << HexletCode::Tag.build("label", for: field_name) { field_name.capitalize }
-        @tags << HexletCode::Tag.build("textarea", merged_options) { @model[field_name] }
+        @tags << HexletCode::Tag.build("textarea", merged_options) { @model.public_send(field_name) }
       else
         @tags << HexletCode::Tag.build("label", for: field_name) { field_name.capitalize }
         merged_options[:type] = "text"
-        merged_options[:value] = @model[field_name]
+        merged_options[:value] = @model.public_send(field_name)
         @tags << HexletCode::Tag.build("input", merged_options)
       end
     end
 
-    def submit
-      @tags << HexletCode::Tag.build("input", type: "submit", value: "Save")
+    def submit(value = 'Save')
+      @tags << HexletCode::Tag.build("input", type: "submit", value: value)
     end
 
     def to_html
