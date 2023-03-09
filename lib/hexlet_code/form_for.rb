@@ -2,8 +2,8 @@
 
 module HexletCode
   def self.form_for(model, form_options = {})
-    form_options[:action] = form_options.fetch(:url, "#")
-    form_options[:method] = form_options.fetch(:method, "post")
+    form_options[:action] = form_options.fetch(:url, '#')
+    form_options[:method] = form_options.fetch(:method, 'post')
     form_options.delete(:url)
 
     form_body = if block_given?
@@ -13,7 +13,7 @@ module HexletCode
 
                 end
 
-    HexletCode::Tag.build("form", form_options.sort.to_h) { form_body }
+    HexletCode::Tag.build('form', form_options.sort.to_h) { form_body }
   end
 
   class FormFields
@@ -26,19 +26,19 @@ module HexletCode
       input_options[:name] = field_name
 
       if input_options.delete(:as)
-        input_options = { cols: "20", rows: "40" }.merge(input_options)
-        @tags << HexletCode::Tag.build("label", for: field_name) { field_name.capitalize }
-        @tags << HexletCode::Tag.build("textarea", input_options.sort.to_h) { @model.public_send(field_name) }
+        input_options = { cols: '20', rows: '40' }.merge(input_options)
+        @tags << HexletCode::Tag.build('label', for: field_name) { field_name.capitalize }
+        @tags << HexletCode::Tag.build('textarea', input_options.sort.to_h) { @model.public_send(field_name) }
       else
-        @tags << HexletCode::Tag.build("label", for: field_name) { field_name.capitalize }
-        input_options[:type] = "text"
+        @tags << HexletCode::Tag.build('label', for: field_name) { field_name.capitalize }
+        input_options[:type] = 'text'
         input_options[:value] = @model.public_send(field_name)
-        @tags << HexletCode::Tag.build("input", input_options.sort.to_h)
+        @tags << HexletCode::Tag.build('input', input_options.sort.to_h)
       end
     end
 
     def submit(value = 'Save')
-      @tags << HexletCode::Tag.build("input", type: "submit", value: value)
+      @tags << HexletCode::Tag.build('input', type: 'submit', value: value)
     end
 
     def to_html

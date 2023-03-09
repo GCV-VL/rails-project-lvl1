@@ -9,7 +9,7 @@ module HexletCode
 
       options_string = options.keys.map do |key|
         "#{key}=\"#{options[key]}\""
-      end.join(" ")
+      end.join(' ')
 
       options_string = " #{options_string}" unless options_string.empty?
       if SINGLE_TAGS.include? tag
