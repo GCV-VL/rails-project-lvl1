@@ -46,7 +46,7 @@ module HexletCode
     end
 
     def submit(value = 'Save')
-      @tags << HexletCode::Tag.build('input', type: 'submit', value: value)
+      @tags << HexletCode::Tag.build('input', type: 'submit', value:)
     end
 
     def to_html
