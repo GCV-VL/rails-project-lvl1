@@ -5,7 +5,7 @@ module HexletCode
     SINGLE_TAGS = %w[br input img].freeze
 
     def self.build(tag, options = {})
-      body = (yield if block_given?)
+      body = yield if block_given?
 
       options_string = options.keys.map do |key|
         "#{key}=\"#{options[key]}\""
