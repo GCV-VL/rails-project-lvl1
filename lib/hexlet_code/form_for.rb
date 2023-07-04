@@ -2,9 +2,10 @@
 
 module HexletCode
   def self.form_for(model, form_options = {})
-    form_options[:action] = form_options.fetch(:url, '#')
-    form_options[:method] = form_options.fetch(:method, 'post')
-    form_options.delete(:url)
+    options = form_options.dup
+    options[:action] = form_options.fetch(:url, '#')
+    options[:method] = form_options.fetch(:method, 'post')
+    options.delete(:url)
 
     form_body = if block_given?
                   form_fields = FormFields.new(model)
@@ -13,7 +14,7 @@ module HexletCode
 
                 end
 
-    HexletCode::Tag.build('form', form_options.sort.to_h) { form_body }
+    HexletCode::Tag.build('form', options.sort.to_h) { form_body }
   end
 
   class FormFields
