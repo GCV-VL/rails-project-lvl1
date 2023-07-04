@@ -3,7 +3,12 @@
 require 'test_helper'
 
 class TestFormFor < Minitest::Test
+
   User = Struct.new(:name, :job, :job2, :gender, keyword_init: true)
+
+  def file_fixture file_name
+    Pathname.new('test/fixtures/files').join(file_name)
+  end
 
   def test_form_for
     user = User.new name: 'rob'
@@ -21,12 +26,7 @@ class TestFormFor < Minitest::Test
       f.input :name
       f.input :job, as: :text
     end
-    assert_equal '<form action="#" method="post">' \
-                 '<label for="name">Name</label>' \
-                 '<input name="name" type="text" value="rob">' \
-                 '<label for="job">Job</label>' \
-                 '<textarea cols="20" name="job" rows="40">hexlet</textarea>' \
-                 '</form>', form_tag
+    assert_equal file_fixture('form_for_fields.html').read, form_tag
   end
 
   def test_form_for_fields_with_class
@@ -36,12 +36,7 @@ class TestFormFor < Minitest::Test
       f.input :job, as: :text
     end
 
-    assert_equal '<form action="#" method="post">' \
-                 '<label for="name">Name</label>' \
-                 '<input class="user-input" name="name" type="text" value="rob">' \
-                 '<label for="job">Job</label>' \
-                 '<textarea cols="20" name="job" rows="40">hexlet</textarea>' \
-                 '</form>', form_tag
+    assert_equal file_fixture('form_fields_with_class.html').read, form_tag
   end
 
   def test_form_for_fields_with_defaults
@@ -49,10 +44,7 @@ class TestFormFor < Minitest::Test
     form_tag = HexletCode.form_for(user) do |f|
       f.input :job, as: :text, rows: 50, cols: 50
     end
-    assert_equal '<form action="#" method="post">' \
-                 '<label for="job">Job</label>' \
-                 '<textarea cols="50" name="job" rows="50">hexlet</textarea>' \
-                 '</form>', form_tag
+    assert_equal file_fixture('form_for_fields_with_defaults.html').read, form_tag
   end
 
   def test_should_raise_exeption
@@ -74,13 +66,7 @@ class TestFormFor < Minitest::Test
       f.submit
     end
 
-    assert_equal '<form action="#" method="post">' \
-                 '<label for="name">Name</label>' \
-                 '<input name="name" type="text" value="rob">' \
-                 '<label for="job">Job</label>' \
-                 '<textarea cols="20" name="job" rows="40">hexlet</textarea>' \
-                 '<input type="submit" value="Save">' \
-                 '</form>', form_tag
+    assert_equal file_fixture('form_for_fields_submit.html').read, form_tag
   end
 
   def test_form_for_fields_submit_wow
@@ -91,12 +77,6 @@ class TestFormFor < Minitest::Test
       f.submit 'WoW'
     end
 
-    assert_equal '<form action="#" method="post">' \
-                 '<label for="name">Name</label>' \
-                 '<input name="name" type="text" value="rob">' \
-                 '<label for="job">Job</label>' \
-                 '<textarea cols="20" name="job" rows="40">hexlet</textarea>' \
-                 '<input type="submit" value="WoW">' \
-                 '</form>', form_tag
+    assert_equal file_fixture('form_for_fields_submit_wow.html').read, form_tag
   end
 end

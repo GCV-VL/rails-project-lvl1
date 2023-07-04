@@ -25,7 +25,6 @@ class TestHexletCode < Minitest::Test
   end
 
   def test_tag_div
-    assert_equal '<div>' \
-                 '</div>', HexletCode::Tag.build('div')
+    assert_equal '<div></div>', HexletCode::Tag.build('div')
   end
 end
