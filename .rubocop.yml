@@ -1,5 +1,5 @@
 AllCops:
-  TargetRubyVersion: 2.6
+  require: rubocop-rails
 
 Style/Documentation:
   Enabled: false
@@ -8,4 +8,6 @@ Layout/LineLength:
 Metrics/BlockLength:
   Enabled: false
 Bundler/OrderedGems:
+  Enabled: false
+Gemspec/RequiredRubyVersion:
   Enabled: false
