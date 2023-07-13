@@ -22,5 +22,4 @@ module HexletCode
 
     HexletCode::Tag.build('form', options.sort.to_h) { form_body }
   end
-
 end

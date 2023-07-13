@@ -3,10 +3,9 @@
 require 'test_helper'
 
 class TestFormFor < Minitest::Test
-
   User = Struct.new(:name, :job, :job2, :gender, keyword_init: true)
 
-  def file_fixture file_name
+  def file_fixture(file_name)
     Pathname.new('test/fixtures/files').join(file_name)
   end
 
