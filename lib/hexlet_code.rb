@@ -5,8 +5,6 @@ require_relative 'hexlet_code/tag'
 require_relative 'hexlet_code/form_fields'
 
 module HexletCode
-  class Error < StandardError; end
-
   def self.form_for(model, form_options = {})
     options = form_options.dup
     options[:action] = form_options.fetch(:url, '#')
