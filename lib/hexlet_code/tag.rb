@@ -11,11 +11,10 @@ module HexletCode
         " #{key}=\"#{value}\""
       end.join('')
 
-      if SINGLE_TAGS.include? tag
-        "<#{tag}#{options_string}>"
-      else
-        "<#{tag}#{options_string}>#{body}</#{tag}>"
-      end
+      
+      return "<#{tag}#{options_string}>" if SINGLE_TAGS.include? tag
+
+      "<#{tag}#{options_string}>#{body}</#{tag}>"
     end
   end
 end
