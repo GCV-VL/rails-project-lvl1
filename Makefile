@@ -3,5 +3,6 @@ install: # установить зависимости
 lint:
 	rubocop
 test:
-	RAILS_LOCALE=en bin/rails test
-	bin/rails test
+	rake test
+
+.PHONY: test

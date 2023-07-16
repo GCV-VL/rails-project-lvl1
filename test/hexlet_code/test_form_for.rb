@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'test_helper'
+require 'pathname'
 
 class TestFormFor < Minitest::Test
   User = Struct.new(:name, :job, :job2, :gender, keyword_init: true)

@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative 'hexlet_code/version'
-require_relative 'hexlet_code/tag'
-require_relative 'hexlet_code/form_fields'
-
 module HexletCode
+  autoload(:VERSION, 'hexlet_code/version')
+  autoload(:Tag, 'hexlet_code/tag')
+  autoload(:FormFields, 'hexlet_code/form_fields')
+
   def self.form_for(model, form_options = {})
     options = form_options.dup
     options[:action] = form_options.fetch(:url, '#')
