@@ -7,11 +7,10 @@ module HexletCode
     def self.build(tag, options = {})
       body = yield if block_given?
 
-      options_string = options.keys.map do |key|
-        "#{key}=\"#{options[key]}\""
-      end.join(' ')
+      options_string = options.map do |key, value|
+        " #{key}=\"#{value}\""
+      end.join('')
 
-      options_string = " #{options_string}" unless options_string.empty?
       if SINGLE_TAGS.include? tag
         "<#{tag}#{options_string}>"
       else
