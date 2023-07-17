@@ -2,17 +2,17 @@
 
 module HexletCode
   class FormFields
+    attr_reader :fields
+
     def initialize(model)
-      @tags = []
+      @fields = []
       @model = model
     end
 
     def input(field_name, input_options = {})
-      as = input_options[:as]
-      options = input_options.except(:as)
+      options = input_options.dup
       options[:name] = field_name
-
-      @tags << HexletCode::Tag.build('label', for: field_name) { field_name.capitalize }
+      as = options.delete(:as)
 
       if as
         build_textarea(field_name, options)
@@ -23,20 +23,16 @@ module HexletCode
 
     def build_textarea(field_name, input_options)
       options = { cols: '20', rows: '40' }.merge(input_options)
-      @tags << HexletCode::Tag.build('textarea', options.sort.to_h) { @model.public_send(field_name) }
+      @fields << { tag: 'textarea', options: options, body: @model.public_send(field_name), label: true }
     end
 
     def build_input(field_name, input_options)
       options = { type: 'text', value: @model.public_send(field_name) }.merge(input_options)
-      @tags << HexletCode::Tag.build('input', options.sort.to_h)
+      @fields << { tag: 'input', options: options, body: nil, label: true }
     end
 
     def submit(value = 'Save')
-      @tags << HexletCode::Tag.build('input', type: 'submit', value:)
-    end
-
-    def to_html
-      @tags.join
+      @fields << { tag: 'input', options: { type: 'submit', value: value }, body: nil, label: false }
     end
   end
 end

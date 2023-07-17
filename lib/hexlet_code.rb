@@ -4,6 +4,7 @@ module HexletCode
   autoload(:VERSION, 'hexlet_code/version')
   autoload(:Tag, 'hexlet_code/tag')
   autoload(:FormFields, 'hexlet_code/form_fields')
+  autoload(:FormFieldsRender, 'hexlet_code/form_fields_render')
 
   def self.form_for(model, form_options = {})
     options = form_options.dup
@@ -14,8 +15,7 @@ module HexletCode
     form_body = if block_given?
                   form_fields = FormFields.new(model)
                   yield(form_fields)
-                  form_fields.to_html
-
+                  FormFieldsRender.new(form_fields).to_html
                 end
 
     HexletCode::Tag.build('form', options.sort.to_h) { form_body }
