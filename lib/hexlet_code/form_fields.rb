@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
 require 'hexlet_code/field_input'
-require 'hexlet_code/field_textarea'
+require 'hexlet_code/field_text'
 
 module HexletCode
   class FormFields
     attr_reader :fields
 
-    FIELD_TYPES = { text: FieldTextarea }.freeze
+    FIELD_TYPES = { text: FieldText }.freeze
 
     def initialize(model)
       @fields = []
@@ -19,10 +19,12 @@ module HexletCode
       options[:name] = field_name
       as = options.delete(:as) || ''
 
+      value = @model.public_send(field_name)
+
       @fields << if FIELD_TYPES[as.to_sym]
-                   FIELD_TYPES[as.to_sym].new(@model, field_name, options).build
+                   FIELD_TYPES[as.to_sym].new(field_name, value, options).build
                  else
-                   FieldInput.new(@model, field_name, options).build
+                   FieldInput.new(field_name, value, options).build
                  end
     end
 

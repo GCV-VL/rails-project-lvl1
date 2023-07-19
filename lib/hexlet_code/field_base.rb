@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 class FieldBase
-  attr_reader :model, :field_name, :input_options
+  attr_reader :field_name, :value, :input_options
 
-  def initialize(model, field_name, input_options)
-    @model = model
+  def initialize(field_name, value, input_options)
     @field_name = field_name
+    @value = value
     @input_options = input_options
   end
 end
