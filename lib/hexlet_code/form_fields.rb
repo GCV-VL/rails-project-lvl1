@@ -4,6 +4,8 @@ module HexletCode
   class FormFields
     attr_reader :fields
 
+    FIELD_TYPES = { text: FieldTextarea }.freeze
+
     def initialize(model)
       @fields = []
       @model = model
@@ -14,21 +16,11 @@ module HexletCode
       options[:name] = field_name
       as = options.delete(:as)
 
-      if as
-        build_textarea(field_name, options)
+      if FIELD_TYPES[as.to_sym]
+        @fields << FIELD_TYPES[as.to_sym].new(@model, field_name, options).build
       else
-        build_input(field_name, options)
+        @fields << FieldInput.new(@model, field_name, options).build
       end
-    end
-
-    def build_textarea(field_name, input_options)
-      options = { cols: '20', rows: '40' }.merge(input_options)
-      @fields << { tag: 'textarea', options: options, body: @model.public_send(field_name), label: true }
-    end
-
-    def build_input(field_name, input_options)
-      options = { type: 'text', value: @model.public_send(field_name) }.merge(input_options)
-      @fields << { tag: 'input', options: options, body: nil, label: true }
     end
 
     def submit(value = 'Save')
