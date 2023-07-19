@@ -13,7 +13,7 @@ module HexletCode
         result += HexletCode::Tag.build('label', for: field_name) { field_name.capitalize } if field[:label]
         result += HexletCode::Tag.build(field[:tag], field[:options].sort.to_h) { field[:body] }
         result
-      end.join('')
+      end.join
     end
   end
 end
