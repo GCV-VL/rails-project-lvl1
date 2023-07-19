@@ -17,7 +17,7 @@ module HexletCode
     def input(field_name, input_options = {})
       options = input_options.dup
       options[:name] = field_name
-      as = options.delete(:as)
+      as = options.delete(:as) || ''
 
       @fields << if FIELD_TYPES[as.to_sym]
                    FIELD_TYPES[as.to_sym].new(@model, field_name, options).build
