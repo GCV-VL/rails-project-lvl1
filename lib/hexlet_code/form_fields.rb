@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'hexlet_code/field_input'
+require 'hexlet_code/field_textarea'
+
 module HexletCode
   class FormFields
     attr_reader :fields
@@ -16,15 +19,15 @@ module HexletCode
       options[:name] = field_name
       as = options.delete(:as)
 
-      if FIELD_TYPES[as.to_sym]
-        @fields << FIELD_TYPES[as.to_sym].new(@model, field_name, options).build
-      else
-        @fields << FieldInput.new(@model, field_name, options).build
-      end
+      @fields << if FIELD_TYPES[as.to_sym]
+                   FIELD_TYPES[as.to_sym].new(@model, field_name, options).build
+                 else
+                   FieldInput.new(@model, field_name, options).build
+                 end
     end
 
     def submit(value = 'Save')
-      @fields << { tag: 'input', options: { type: 'submit', value: value }, body: nil, label: false }
+      @fields << { tag: 'input', options: { type: 'submit', value: }, body: nil, label: false }
     end
   end
 end

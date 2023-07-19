@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class FieldBase
   attr_reader :field_name, :input_options
 
