@@ -23,7 +23,6 @@ jobs:
       with:
         ruby-version: ${{ matrix.ruby }}
         bundler-cache: true
-    - name: Bundle install
-      run: bundle install
-    - name: Lint
-      run: make lint
+    - run: bundle install
+    - run: make lint
+    - run: make test
