@@ -5,19 +5,14 @@ module HexletCode
   autoload(:Tag, 'hexlet_code/tag')
   autoload(:FormFields, 'hexlet_code/form_fields')
   autoload(:FormFieldsRender, 'hexlet_code/form_fields_render')
+  autoload(:FormRender, 'hexlet_code/form_render')
 
-  def self.form_for(model, form_options = {})
+  def self.form_for(model, form_options = {}, &block)
     options = form_options.dup
     options[:action] = form_options.fetch(:url, '#')
     options[:method] = form_options.fetch(:method, 'post')
     options.delete(:url)
 
-    form_body = if block_given?
-                  form_fields = FormFields.new(model)
-                  yield(form_fields)
-                  FormFieldsRender.new(form_fields).to_html
-                end
-
-    HexletCode::Tag.build('form', options.sort.to_h) { form_body }
+    HexletCode::FormRender.new(model, options, &block).to_html
   end
 end
