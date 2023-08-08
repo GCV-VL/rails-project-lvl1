@@ -9,9 +9,9 @@ module HexletCode
     def to_html
       HexletCode::Tag.build('form', @options.sort.to_h) do
         if @block
-          form_fields = FormFields.new(@model)
-          @block.call(form_fields)
-          FormFieldsRender.new(form_fields).to_html
+          f = FormFields.new(@model)
+          @block.call(f)
+          FormFieldsRender.new(f).to_html
         end
       end
     end
