@@ -1,0 +1,3 @@
+class HexletCode::FieldInputRender
+
+end
